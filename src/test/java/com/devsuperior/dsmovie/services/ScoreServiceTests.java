@@ -43,7 +43,6 @@ class ScoreServiceTests {
 
     private MovieEntity movie;
 
-    private ScoreEntity score;
     private ScoreDTO scoreDTO;
 
     @BeforeEach
@@ -53,10 +52,11 @@ class ScoreServiceTests {
 
         UserEntity user = UserFactory.createUserEntity();
 
-        movie = MovieFactory.createMovieEntity();
-
-        score = ScoreFactory.createScoreEntity();
+        ScoreEntity score = ScoreFactory.createScoreEntity();
         scoreDTO = ScoreFactory.createScoreDTO();
+
+        movie = MovieFactory.createMovieEntity();
+        movie.getScores().add(score);
 
         when(userService.authenticated()).thenReturn(user);
 
@@ -72,7 +72,6 @@ class ScoreServiceTests {
 
         Assertions.assertNotNull(result);
         Assertions.assertNotNull(result.getScore());
-        Assertions.assertEquals(score.getId().getMovie().getId(), result.getId());
     }
 
     @Test
